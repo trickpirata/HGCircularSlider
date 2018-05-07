@@ -656,10 +656,10 @@
                                     <userDefinedRuntimeAttribute type="color" keyPath="trackEndColor">
                                         <color key="value" red="0.84313725490000002" green="0.17254901959999999" blue="0.16078431369999999" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="trackTransitionColor" value="YES"/>
                                     <userDefinedRuntimeAttribute type="color" keyPath="endThumbTintColor">
                                         <color key="value" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="trackTransitionColor" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="KXq-jq-I0O">

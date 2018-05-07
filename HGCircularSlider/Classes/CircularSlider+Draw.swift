@@ -61,7 +61,6 @@ extension CircularSlider {
         let rect = stroke!.boundingBox
         context.drawLinearGradient(gradient, start: CGPoint(x: 0, y: rect.minY), end: CGPoint(x: 0, y: rect.maxY), options: [])
 
-        
         context.restoreGState()
         UIGraphicsPopContext()
     }
@@ -115,7 +114,7 @@ extension CircularSlider {
 
         if trackTransitionColor {
             // gradient
-            CircularSlider.drawGradient(withArc: arc, startColor: trackFillColor, endColor: trackEndColor, inContext: context)
+            CircularSlider.drawGradient(withArc: arc, lineWidth: lineWidth, startColor: trackFillColor, endColor: trackEndColor, inContext: context)
         } else {
             // stroke Arc
             CircularSlider.drawArc(withArc: arc, lineWidth: lineWidth, mode: .stroke, inContext: context)

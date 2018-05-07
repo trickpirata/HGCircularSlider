@@ -53,7 +53,7 @@ extension CircularSlider {
         
         let cgPath = CGMutablePath()
         cgPath.addArc(center: origin, radius: circle.radius, startAngle: arc.startAngle, endAngle: arc.endAngle, clockwise: false)
-        let stroke = CGPath(__byStroking: cgPath, transform: nil, lineWidth: lineWidth, lineCap: .butt, lineJoin: .miter, miterLimit: 10)
+        let stroke = CGPath(__byStroking: cgPath, transform: nil, lineWidth: lineWidth, lineCap: .round, lineJoin: .miter, miterLimit: 10)
         context.saveGState()
         context.addPath(stroke!)
         context.clip()

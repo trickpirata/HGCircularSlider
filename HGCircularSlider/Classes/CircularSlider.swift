@@ -41,11 +41,25 @@ open class CircularSlider: UIControl {
     open var trackFillColor: UIColor = .clear
     
     /**
+     * The color that will be shown in the end of the track. Only applicable if trackTransitionColor = true
+     * The default value of this property is the tint color.
+     */
+    @IBInspectable
+    open var trackEndColor: UIColor = .clear
+    
+    /**
      * The color shown for the unselected track portion. (outside start and end values)
      * The default value of this property is the white color.
      */
     @IBInspectable
     open var trackColor: UIColor = .white
+    
+    /**
+     * Transitions the color from trackFillColor to trackEndColor based on endPointValue
+     * The default value of this property is the white color.
+     */
+    @IBInspectable
+    open var trackTransitionColor:Bool = false
     
     /**
      * The width of the circular line
@@ -291,6 +305,7 @@ open class CircularSlider: UIControl {
         return true
     }
     
+    
     /**
      See superclass documentation
      */
@@ -299,6 +314,7 @@ open class CircularSlider: UIControl {
     }
 
     // MARK: Utilities methods
+
     internal func newValue(from oldValue: CGFloat, touch touchPosition: CGPoint, start startPosition: CGPoint) -> CGFloat {
         let angle = CircularSliderHelper.angle(betweenFirstPoint: startPosition, secondPoint: touchPosition, inCircleWithCenter: bounds.center)
         let interval = Interval(min: minimumValue, max: maximumValue, rounds: numberOfRounds)

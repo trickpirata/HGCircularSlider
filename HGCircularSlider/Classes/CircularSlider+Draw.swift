@@ -17,10 +17,11 @@ extension CircularSlider {
      - parameter arc:           the arc coordinates (origin, radius, start angle, end angle)
      - parameter lineWidth:     the with of the circle line (optional) by default 2px
      - parameter mode:          the mode of the path drawing (optional) by default FillStroke
+     - parameter clockwise:     the orientation of the slider fill
      - parameter context:       the context
      
      */
-    internal static func drawArc(withArc arc: Arc, lineWidth: CGFloat = 2, mode: CGPathDrawingMode = .fillStroke, inContext context: CGContext) {
+    internal static func drawArc(withArc arc: Arc, lineWidth: CGFloat = 2, mode: CGPathDrawingMode = .fillStroke, clockwise:Bool = false, inContext context: CGContext) {
         
         let circle = arc.circle
         let origin = circle.origin
@@ -30,14 +31,26 @@ extension CircularSlider {
         
         context.setLineWidth(lineWidth)
         context.setLineCap(CGLineCap.round)
-        context.addArc(center: origin, radius: circle.radius, startAngle: arc.startAngle, endAngle: arc.endAngle, clockwise: false)
+        context.addArc(center: origin, radius: circle.radius, startAngle: arc.startAngle, endAngle: arc.endAngle, clockwise: clockwise)
         context.move(to: CGPoint(x: origin.x, y: origin.y))
         context.drawPath(using: mode)
         UIGraphicsPopContext()
 
     }
     
-    internal static func drawGradient(withArc arc:Arc, lineWidth: CGFloat = 2,startColor start:UIColor,endColor end:UIColor, inContext context: CGContext) {
+    /**
+     Draw arc with stroke mode (Stroke) or Disk (Fill) or both (FillStroke) mode
+     FillStroke used by default
+     
+     - parameter arc:           the arc coordinates (origin, radius, start angle, end angle)
+     - parameter lineWidth:     the with of the circle line (optional) by default 2px
+     - parameter startColor:    the first gradient color
+     - parameter endColor:      the end gradient color which startColor will transition to
+     - parameter clockwise:     the orientation of the gradient fill
+     - parameter context:       the context
+     
+     */
+    internal static func drawGradient(withArc arc:Arc, lineWidth: CGFloat = 2,startColor start:UIColor,endColor end:UIColor, clockwise:Bool = false, inContext context: CGContext) {
         let circle = arc.circle
         let origin = circle.origin
         let gradient = start.gradientColorsWithEndColor(end)
@@ -47,12 +60,12 @@ extension CircularSlider {
         context.beginPath()
         context.setLineWidth(lineWidth)
         context.setLineCap(CGLineCap.round)
-        context.addArc(center: origin, radius: circle.radius, startAngle: arc.startAngle, endAngle: arc.endAngle, clockwise: false)
+        context.addArc(center: origin, radius: circle.radius, startAngle: arc.startAngle, endAngle: arc.endAngle, clockwise: clockwise)
         context.move(to: CGPoint(x: origin.x, y: origin.y))
         context.drawPath(using: .stroke)
         
         let cgPath = CGMutablePath()
-        cgPath.addArc(center: origin, radius: circle.radius, startAngle: arc.startAngle, endAngle: arc.endAngle, clockwise: false)
+        cgPath.addArc(center: origin, radius: circle.radius, startAngle: arc.startAngle, endAngle: arc.endAngle, clockwise: clockwise)
         let stroke = CGPath(__byStroking: cgPath, transform: nil, lineWidth: lineWidth, lineCap: .round, lineJoin: .miter, miterLimit: 10)
         context.saveGState()
         context.addPath(stroke!)
@@ -100,7 +113,7 @@ extension CircularSlider {
     }
 
     /// draw Filled arc between start an end angles
-    internal func drawFilledArc(fromAngle startAngle: CGFloat, toAngle endAngle: CGFloat, inContext context: CGContext) {
+    internal func drawFilledArc(fromAngle startAngle: CGFloat, toAngle endAngle: CGFloat,rotationClockwise clockwise:Bool = false, inContext context: CGContext) {
         diskFillColor.setFill()
         if !trackTransitionColor {
             trackFillColor.setStroke()
@@ -114,10 +127,10 @@ extension CircularSlider {
 
         if trackTransitionColor {
             // gradient
-            CircularSlider.drawGradient(withArc: arc, lineWidth: lineWidth, startColor: trackFillColor, endColor: trackEndColor, inContext: context)
+            CircularSlider.drawGradient(withArc: arc, lineWidth: lineWidth, startColor: trackFillColor, endColor: trackEndColor, clockwise: clockwise, inContext: context)
         } else {
             // stroke Arc
-            CircularSlider.drawArc(withArc: arc, lineWidth: lineWidth, mode: .stroke, inContext: context)
+            CircularSlider.drawArc(withArc: arc, lineWidth: lineWidth, mode: .stroke, clockwise: clockwise, inContext: context)
         }
     }
 

@@ -62,6 +62,12 @@ open class CircularSlider: UIControl {
     open var trackTransitionColor:Bool = false
     
     /**
+     * Sets the rotation of the slider to counter clockwise if true. Default is false
+     */
+    @IBInspectable
+    open var counterClockwise:Bool = false
+    
+    /**
      * The width of the circular line
      *
      * The default value of this property is 5.0.
@@ -266,7 +272,7 @@ open class CircularSlider: UIControl {
         // get end angle from end value
         let endAngle = CircularSliderHelper.scaleToAngle(value: endPointValue, inInterval: valuesInterval) + CircularSliderHelper.circleInitialAngle
         
-        drawFilledArc(fromAngle: CircularSliderHelper.circleInitialAngle, toAngle: endAngle, inContext: context)
+        drawFilledArc(fromAngle: CircularSliderHelper.circleInitialAngle, toAngle: endAngle, rotationClockwise: counterClockwise, inContext: context)
         
         // draw end thumb
         endThumbTintColor.setFill()
